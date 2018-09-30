@@ -66,7 +66,7 @@ def mean_squaured_error(y, t):
 
 ```python
 def corss_entropy_error(y, t):
-    delta = 1e-7 // np.log에 0이 들어가면 -inf가 되므로 작은 값을 더해줌
+    delta = 1e-7 # np.log에 0이 들어가면 -inf가 되므로 작은 값을 더해줌
     return -np.sum(t * np.log(y + delta))
 ```
 
@@ -96,10 +96,10 @@ def corss_entropy_error(y, t):
 경사 하강법은 다음과 같이 구현할 수 있다. 
 
 ```python
-// f == 최적화 하려는 함수
-// init_x == 초깃값
-// lr == 학습률 (learning rate)
-// step_num == 반복 학습 횟수
+# f == 최적화 하려는 함수
+# init_x == 초깃값
+# lr == 학습률 (learning rate)
+# step_num == 반복 학습 횟수
 def gradient_descent(f, init_x, lr=0.01, step_num=100):
     x = init_x
     
