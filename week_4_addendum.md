@@ -1,6 +1,6 @@
 # 오차역전파법 부록
 
-여기에는 그다지 몰라도 상관 없는 내용들을 담아 두었다.
+여기에는 그냥 넘겨도 상관 없는 내용들을 담아 두었다.
 
 ## 계산 그래프와 친해지기
 
@@ -38,17 +38,17 @@ class Add:
 class Multiply:
     def __init__(self):
         self.x = None
-	self.y = None
+        self.y = None
 
     def forward(self, x, y):
         self.x = x   # 미분할 때 필요하니까 저장해 둔다
-	self.y = y   # 이것도
-	return x * y # 그 다음 곱해서 흘려보낸다
+        self.y = y   # 이것도
+        return x * y # 그 다음 곱해서 흘려보낸다
 
     def backward(self, dout):
         dx = dout * self.y # 이전 미분값에 입력을 바꿔서 곱한다
-	dy = dout * self.x # 이것도
-	return (dx, dy)    # 그 다음에 흘려보낸다
+        dy = dout * self.x # 이것도
+        return (dx, dy)    # 그 다음에 흘려보낸다
 ```
 
 ### 나눗셈 노드
@@ -59,17 +59,17 @@ class Multiply:
 class Divide:
     def __init__(self):
         self.x = None
-	self.y = None
+        self.y = None
 
     def forward(self, x, y):
         self.x = x   # 미분할 때 필요하니까 저장해 둔다
-	self.y = y   # 이것도
-	return x / y # 그 다음 나눠 준다
+        self.y = y   # 이것도
+        return x / y # 그 다음 나눠 준다
 
     def backward(self, dout):
         dx = dout / self.y                    # x에 대한 미분을 구하려면 이전 미분값을 y로 나눈다
-	dy = dout * (-self.x) / (self.y ** 2) # y에 대한 미분을 구하려면 이전 미분값에 (-x/(y^2))를 곱한다
-	return (dx, dy)                       # 그리고 흘려 준다
+        dy = dout * (-self.x) / (self.y ** 2) # y에 대한 미분을 구하려면 이전 미분값에 (-x/(y^2))를 곱한다
+        return (dx, dy)                       # 그리고 흘려 준다
 ```
 
 ### 그래프 구현
@@ -95,7 +95,7 @@ final_price = shipping_fee_layer.forward(lnovel_price_dollar, shipping_fee)
 dfinal_price = 1
 (dlnovel_price_dollar, dshipping_fee) = shipping_fee_layer.backward(dfinal_price)
 (dlnovel_price, dcurrency_conversion) = currency_convert_layer.backward(dlnovel_price_dollar)
-(dlnovel, dlnovel_num) = lnovem_multiple_layer.backward(dlnovel_price)
+(dlnovel, dlnovel_num) = lnovel_multiple_layer.backward(dlnovel_price)
 ```
 
 ## ReLU 미분하기
@@ -140,11 +140,41 @@ ReLU 함수의 식은 다음과 같다.
 
 ![affine operation][exp8]
 
-먼저 **배치(*Batch*)** 를 고려하지 않은 일반적인 연산을 생각해보자. 이 때, **X**는 크기 `n`의 행벡터, **W**는 크기 `n×m`의 행렬, **B**는 크기 `m`의 행벡터, **Y**는 크기 `m`의 행벡터이다. 벡터를 넘파이에 집어넣으면 `(n, )` 형식으로 열벡터로 표현된다. 이 경우 넘파이에서 자동으로 행벡터로 바꿔서 계산해준다.
+먼저 **배치(*Batch*)** 를 고려하지 않은 일반적인 연산을 생각해보자. 이 때, **X**는 크기 `n`의 행벡터, **W**는 크기 `n×m`의 행렬, **B**는 크기 `m`의 행벡터, **Y**는 크기 `m`의 행벡터이다. 하지만 벡터를 넘파이에 집어넣으면 `(n, )` 형식으로 열벡터로 표현된다. 이 경우 넘파이에서 자동으로 행벡터로 바꿔서 계산해준다.
 
 ![variable definitions][exp9]
 
+이제 미분을 해 보자. 벡터 미분의 정의에 따라, 벡터를 다른 벡터로 미분하면 각 원소에 대한 편미분을 모두 구해야 하기 때문에 행렬이 나온다.
 
+![differentiating vector with vector][exp10]
+
+그럼 여기에서 한번 계산을 해 볼 수 있을 것 같다. 전부 계산하는 건 귀찮으니까 `1 < i < n`을 만족하는 `i`와 `1 < j < m`을 만족하는 `j`를 임의로 골라서 x(i), y(j)에 대한 값을 구해보도록 하자. 편향 벡터를 더하는 부분은 스칼라 덧셈과 마찬가지로 미분해도 변함이 없기 때문에 생략하도록 하자. 그렇다면 먼저 **Y**의 각 원소는 행벡터 **X**와 행렬 **W**안의 특정한 열벡터를 스칼라곱 한 것이다. 즉,
+
+![definition of y(j)][exp11]
+
+을 만족한다. 그럼 이 식을 x(i)에 대해 편미분 해 보자. 하지만 위 식에서 x(i)가 출현하는 곳은 한 군데밖에 없기 때문에, 편미분하면 다음과 같다.
+
+![differentiating y(j) with respect to x(i)][exp12]
+
+이 식을 일반화시켜서 위 행렬에 꽂아넣으면 다음과 같은 행렬이 나온다.
+
+![actual differentiation][exp13]
+
+이렇게 해서 **W**의 전치행렬이 미분값이라는 점을 알아냈다. 역전파 때 넘파이가 화내지 않게 크기를 잘 맞춰서 넣어주도록 하자.
+
+...하지만 책은 여기서 한 술 더 떠서 배치용 어파인 계층을 만든다. 배치용 어파인 계층의 특징은 입력이 행벡터가 아닌 행렬 모양이라는 것이다. 따라서, 행렬을 행렬으로 미분하는 모양새가 되는데, 원칙적으로 행렬을 행렬으로 미분하면 4차원 텐서가 나온다. (계산해보면 2차원 안에 포함시킬 수 있게 나오긴 한다.) 그래서 여기에서의 입력값은 행렬이 아니라 행벡터의 배열으로 보는 것이 더 이해하기 쉽다. 즉,
+
+```python
+for row_vector in X:
+    result = row_vector.dot(W)
+    Y.append(result)
+```
+
+정도로 해석하는 게 더 간단하다고 생각한다.
+
+## Softmax-with-Loss 
+
+이 함수는 책 부록에 미분 과정이 계산 그래프를 이용해 그려져 있어서 훑어보면 된다.
 
 [exp1]: https://latex.codecogs.com/gif.latex?%5Ctextup%20%7BReLU%7D%20%28x%29%20%3D%20%5Cleft%20%5C%7B%20%5Cbegin%20%7Bmatrix%7D%20x%20%5Cleft.%5Cright.%20%28x%20%3E%200%29%20%5C%5C%200%20%5Cleft.%5Cright.%20%28x%20%5Cleq%200%29%20%5Cend%20%7Bmatrix%7D
 
@@ -164,3 +194,10 @@ ReLU 함수의 식은 다음과 같다.
 
 [exp9]: https://latex.codecogs.com/gif.latex?%5Cboldsymbol%20X%20%3D%20%5Cbegin%20%7Bpmatrix%7D%20x_1%20%26%20%5Ccdots%20%26%20x_n%20%5Cend%20%7Bpmatrix%7D%20%5C%5C%20%5Cboldsymbol%20W%20%3D%20%5Cbegin%20%7Bpmatrix%7D%20w_%7B11%7D%20%26%20%5Ccdots%20%26%20w_%7B1m%7D%20%5C%5C%20%5Cvdots%20%26%20%5Cddots%20%26%20%5Cvdots%20%5C%5C%20w_%7Bn1%7D%20%26%20%5Ccdots%20%26%20w_%7Bnm%7D%20%5Cend%20%7Bpmatrix%7D%20%5C%5C%20%5Cboldsymbol%20B%20%3D%20%5Cbegin%20%7Bpmatrix%7D%20b_1%20%26%20%5Ccdots%20%26%20b_m%20%5Cend%20%7Bpmatrix%7D%20%5C%5C%20%5Cboldsymbol%20Y%20%3D%20%5Cbegin%20%7Bpmatrix%7D%20y_1%20%26%20%5Ccdots%20%26%20y_m%20%5Cend%20%7Bpmatrix%7D
 
+[exp10]: https://latex.codecogs.com/gif.latex?%5Cfrac%20%7B%5Cpartial%20%5Cboldsymbol%20Y%7D%20%7B%5Cpartial%20%5Cboldsymbol%20X%7D%3D%20%5Cbegin%20%7Bpmatrix%7D%20%5Cfrac%20%7B%5Cpartial%20%5Cboldsymbol%20Y%7D%20%7B%5Cpartial%20x_1%7D%20%26%20%5Ccdots%20%26%20%5Cfrac%20%7B%5Cpartial%20%5Cboldsymbol%20Y%7D%20%7B%5Cpartial%20x_n%7D%20%5Cend%20%7Bpmatrix%7D%20%3D%20%5Cbegin%20%7Bpmatrix%7D%20%5Cfrac%20%7B%5Cpartial%20y_1%7D%20%7B%5Cpartial%20x_1%7D%20%26%20%5Ccdots%20%26%20%5Cfrac%20%7B%5Cpartial%20y_1%7D%20%7B%5Cpartial%20x_n%7D%20%5C%5C%20%5Cvdots%20%26%20%5Cddots%20%26%20%5Cvdots%20%5C%5C%20%5Cfrac%20%7B%5Cpartial%20y_m%7D%20%7B%5Cpartial%20x_1%7D%20%26%20%5Ccdots%20%26%20%5Cfrac%20%7B%5Cpartial%20y_m%7D%20%7B%5Cpartial%20x_n%7D%20%5Cend%20%7Bpmatrix%7D
+
+[exp11]: https://latex.codecogs.com/gif.latex?y_j%20%3D%20%5Cboldsymbol%20X%20%5Ccdot%20%5Cboldsymbol%20W_%7B*j%7D%20%3D%20%5Csum_%7Bi%7D%20x_i%20%5Ccdot%20w_%7Bij%7D%20%5C%5C%20%3D%20x_1%20w_%7B1j%7D%20&plus;%20x_2%20w_%7B2j%7D%20&plus;%20%5Ccdots%20&plus;%20x_i%20w_%7Bij%7D%20&plus;%20%5Ccdots%20&plus;%20x_n%20w_%7Bnj%7D
+
+[exp12]: https://latex.codecogs.com/gif.latex?%5Cfrac%20%7B%5Cpartial%20y_j%7D%20%7B%5Cpartial%20x_i%7D%20%3D%20w_%7Bij%7D
+
+[exp13]: https://latex.codecogs.com/gif.latex?%5Cfrac%20%7B%5Cpartial%20%5Cboldsymbol%20Y%7D%20%7B%5Cpartial%20%5Cboldsymbol%20X%7D%20%3D%20%5Cbegin%20%7Bpmatrix%7D%20%5Cfrac%20%7B%5Cpartial%20y_1%7D%20%7B%5Cpartial%20x_1%7D%20%26%20%5Ccdots%20%26%20%5Cfrac%20%7B%5Cpartial%20y_1%7D%20%7B%5Cpartial%20x_n%7D%20%5C%5C%20%5Cvdots%20%26%20%5Cddots%20%26%20%5Cvdots%20%5C%5C%20%5Cfrac%20%7B%5Cpartial%20y_m%7D%20%7B%5Cpartial%20x_1%7D%20%26%20%5Ccdots%20%26%20%5Cfrac%20%7B%5Cpartial%20y_m%7D%20%7B%5Cpartial%20x_n%7D%20%5Cend%20%7Bpmatrix%7D%20%3D%20%5Cbegin%20%7Bpmatrix%7D%20w_%7B11%7D%20%26%20%5Ccdots%20%26%20w_%7Bn1%7D%20%5C%5C%20%5Cvdots%20%26%20%5Cddots%20%26%20%5Cvdots%20%5C%5C%20w_%7B1m%7D%20%26%20%5Ccdots%20%26%20w_%7Bnm%7D%20%5Cend%20%7Bpmatrix%7D%20%3D%20%5Cboldsymbol%20W%5ET
