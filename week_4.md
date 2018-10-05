@@ -3,17 +3,17 @@
 ## 목차
 
 1. 오차역전파법
-  1. with 수식
-  2. with 계산 그래프
+    1. with 수식
+    2. with 계산 그래프
 2. 계산 그래프
-  1. 계산 그래프로 문제 풀기
-  2. 국소적 계산
-  3. 역전파
+    1. 계산 그래프로 문제 풀기
+    2. 국소적 계산
+    3. 역전파
 3. 오차역전파법 구현 준비
-  1. ReLU
-  2. Sigmoid
-  3. Affine
-  4. Softmax-with-Loss
+    1. ReLU
+    2. Sigmoid
+    3. Affine
+    4. Softmax-with-Loss
 4. 오차역전파법 구현하기
 
 ## 오차역전파법
