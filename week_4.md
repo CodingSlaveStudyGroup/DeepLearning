@@ -60,7 +60,7 @@
 
 ## 오차역전파법 구현하기
 
-이제 계산 그래프를 배웠으니, 실제로 파이썬으로 구현해서 적용해보자. 노드 클래스는 기본적으로 다음과 같은 구조를 가진다. (덕 타이핑 덕분에 굳이 노드 클래스를 만들어 상속할 필요는 없지만...)
+이제 계산 그래프를 배웠으니, 실제로 파이썬으로 구현해서 적용해보자. 노드 클래스는 기본적으로 다음과 같은 구조를 가진다. (덕 타이핑 덕분에 굳이 노드 클래스를 만들어 상속할 필요는 없다)
 
 | 멤버 함수 | 역할 |
 |-----|-----|
@@ -81,15 +81,17 @@ ReLU는 최근 들어 많이 사용하는 활성화 함수이다. 함수의 정�
 class Relu:
     def __init__(self):
         self.mask = None
+
     def forward(self, x):
         self.mask = (x <= 0) # x의 원소 중 0보다 크면 False, 아니면 True로 마스크를 만들어 주고
-        out = x.copy() # x를 out 변수에 member-wise copy해 준 뒤
-        out[self.mask] = 0 # 방금 만든 마스크에 해당하는 원소를 전부 0으로 만들고
-        return out # 그 값을 반환한다.
+        out = x.copy()       # x를 out 변수에 member-wise copy해 준 뒤
+        out[self.mask] = 0   # 방금 만든 마스크에 해당하는 원소를 전부 0으로 만들고
+        return out           # 그 값을 반환한다.
+
     def backward(self, dout):
         dout[self.mask] = 0 # 아까 만들어둔 마스크를 이용해서 필요한 부분을 버리고
-        dx = dout # 새 변수에 옮겨준 뒤
-        return dx # 반환한다.
+        dx = dout           # 새 변수에 옮겨준 뒤
+        return dx           # 반환한다.
 ```
 
 ### Sigmoid
@@ -108,13 +110,15 @@ class Relu:
 class Sigmoid:
     def __init__(self):
         self.out = None
+
     def forward(self, x):
         out = 1 / (1 + np.exp(-x)) # 결과값을 먼저 계산해주자
-        self.out = out # 나중에 써먹어야 하니까 저장해 둔 뒤
-        return out # 결과값을 반환한다.
-    def backward(self, dout):
+        self.out = out             # 나중에 써먹어야 하니까 저장해 둔 뒤
+        return out                 # 결과값을 반환한다.
+    
+    def backward(self, dout):
         dx = dout * (1.0 - self.out) * self.out # 아까 저장한 결과값으로 미분을 계산하고
-        return dx # 반환한다.
+        return dx                               # 반환한다.
 ```
 
 ### Affine
@@ -145,15 +149,17 @@ class Affine:
         self.x = None
         self.dW = None
         self.db = None
-    def forward(self, x)
-        self.x = x # 미분할 때 쓰니까 입력값도 저장해 두고
-        out = np.dot(x, self.W) + self.b # 넘파이가 싫어하지 않게 순서를 잘 맞춰서 곱해준 뒤 편향을 더해주고
-        return out # 반환한다.
-    def backward(self, dout):
-        dx = np.dot(dout, self.W.T) # 넘파이가 싫어하지 않게 순서를 맞춰 전치행렬을 곱해준 뒤
+    
+    def forward(self, x)
+        self.x = x                       # 미분할 때 쓰니까 입력값도 저장해 두고
+        out = np.dot(x, self.W) + self.b # 넘파이가 싫어하지 않게 잘 곱한 뒤 편향을 더해주고
+        return out                       # 반환한다.
+
+    def backward(self, dout):
+        dx = np.dot(dout, self.W.T)      # 넘파이가 싫어하지 않게 순서를 맞춰 전치행렬을 곱해준 뒤
         self.dW = np.dot(self.x.T, dout) # 학습할 때 써야하니까 W에 대한 미분값도 저장해주고
-        self.db = np.sum(dout, axis=0) # 같은 이유로 편향에 대한 미분도 저장해주고
-        return dx # X에 대한 미분값을 흘려보내준다.
+        self.db = np.sum(dout, axis=0)   # 같은 이유로 편향에 대한 미분도 저장해주고
+        return dx                        # X에 대한 미분값을 흘려보내준다.
 ```
 
 
