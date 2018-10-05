@@ -186,9 +186,7 @@ class Affine:
 
 ![softmax-with-loss partial derivative][exp10]
 
-여기에서 y(k)는 Softmax 함수의 순전파 출력값이고, t(k)는 정답 레이블의 값이다.
-
-이 함수에 대한 또 다른 사담은 [부록 페이지](/week_4_addendum.md)에 더 있다. 이제 함숫값도 구했겠다, 파이썬으로 구현해 보자.
+여기에서 y(k)는 Softmax 함수의 순전파 출력값이고, t(k)는 정답 레이블의 값이다. 이제 함숫값도 구했겠다, 파이썬으로 구현해 보자.
 
 ```python
 class SoftmaxWithLoss:
