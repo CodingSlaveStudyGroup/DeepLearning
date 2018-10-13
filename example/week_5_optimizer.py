@@ -1,9 +1,12 @@
 import numpy as np
 
-
 # Almost every codes were written by Phryxia
+# Every implementation is almost strict-forward
+# and didn't think of practical efficiency.
 
 # Stochastic Gradient Descent Optimizer
+#
+#   Noble, legendary classic optimizer.
 #
 #   θ := θ - η * dL/dθ
 #
@@ -19,6 +22,9 @@ class SGDOptimizer:
 
 
 # Momentum Optimizer(1999)
+#
+#   Inspired by real world's physical phenomena.
+#   Mostly better than SGD.
 #
 #   v  := α * v - η * dL/dθ
 #   θ := θ + v
@@ -46,6 +52,10 @@ class MomentumOptimizer:
 
 
 # Adagrad Optimizer(2011)
+#
+#   Pretty first approach to adaptive method.
+#   It defeat SGD for many case but it has annoying issue
+#   of gradient being zero after many iterations.
 #
 #   g  := dL/dθ
 #   G  := G + g^2
@@ -75,6 +85,9 @@ class AdagradOptimizer:
 
 
 # RMSProp Optimizer(2012)
+#
+#   Nice simple optimizer which hasn't been published
+#   but proposed in the writer's lecture. It works well
 #
 #   g  := dL/dθ
 #   G  := ρ * G + (1 - ρ) * g^2
@@ -106,6 +119,10 @@ class RMSPropOptimizer:
 
 
 # Adadelta Optimizer(2012)
+#
+#   Simply, RMSProp + Momentum. Writter also insists that
+#   Adagrad and Momentum's theoretical units are wrong.
+#   He fixed such theoretical improperness with this method.
 #
 #   g  := dL/dθ
 #   G  := ρ * G + (1 - ρ) * g^2
@@ -145,6 +162,9 @@ class AdadeltaOptimizer:
 
 
 # ADaptive Moment estimation Optimizer(2015)
+#
+#   The most infamous and popular optimizer.
+#   Suitable for model prototyping, but sometimes it fails to find global optima.
 #
 #   g  := dL/dθ
 #   m  := β1 * m + (1 - β1) * g
@@ -190,7 +210,10 @@ class AdamOptimizer:
                 self.v[key] = np.zeros_like(param)
 
 
-# Continuous Coin Betting Optimizer(2017)
+# COntinuous COin Betting Optimizer(2017)
+#
+#   Note that COCOB is slightly unstable when it reaches
+#   nearly optimal convergence. Early stopping is very important.
 #
 #   g  := - dL/dθ
 #   L  := max(L, |g|)
@@ -201,7 +224,7 @@ class AdamOptimizer:
 #
 #   Hyperparameter
 #       α: Safety guard from having too big step size. Typical value is 100
-#       ε: Safety guard from dividing by zero. Originally this doesn't exist.
+#       ε: Safety guard from dividing by zero. This doesn't exist in the original paper.
 class COCOBOptimizer:
     def __init__(self, alpha=100, epsilon=1e-6):
         self.alpha = alpha
@@ -243,70 +266,3 @@ def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x))
 
 
-class SimpleNetwork:
-    def __init__(self):
-        self.param_dict = {}
-        self.grad_dict = {}
-        self.__create_param('W', np.random.normal(loc=0.0, scale=1e-2, size=1))
-        self.__create_param('b', np.zeros(1))
-
-    def __create_param(self, name, init_value):
-        self.param_dict[name] = np.copy(init_value)
-        self.grad_dict[name] = np.zeros_like(init_value)
-
-    def estimate(self, x_data):
-        # s := x * W + b
-        # y := sigmoid(s)
-        # Note that this is 0D problem. If you use 1D, you have to change * np.dot()
-        return sigmoid(x_data * self.param_dict['W'] + self.param_dict['b'])
-
-    def train(self, x_data, y_data):
-        # Forward
-        # s := x_data * W + b
-        # y_hat := sigmoid(s)
-        y_hat = self.estimate(x_data)
-
-        # loss := sum of every elements of 0.5 * (y_hat - y_data)^2
-        # You can use average instead, if you have proper reasons.
-        # But if you use average, you MUST divide dL/dy by batch size.
-        diff = y_hat - y_data
-        loss = 0.5 * np.sum(np.square(diff), axis=0)
-        # loss = 0.5 * np.average(np.square(diff), axis=0)
-
-        # Backward
-        # dL/dy := y_hat - y_data
-        dLdy = diff
-        # dLdy = diff / np.size(x_data, 0)
-
-        # dL/ds := sigmoid'(s) * dL/dy
-        dLds = y_hat * (1 - y_hat) * dLdy
-
-        # dW := W^T @ dL/ds
-        # db := dL/ds
-        # Note that numpy's dLds has batch axis, so you have to sum all of these.
-        self.grad_dict['W'] = np.sum(x_data * dLds, axis=0)
-        self.grad_dict['b'] = np.sum(dLds, axis=0)
-
-        print('loss = ' + str(loss))
-
-
-# Sometimes I miss you, "int main(int argc, char** argv)"
-if __name__ == '__main__':
-    # Prepare data.
-    x_data = np.array([-1.0, 0.0, 1.0])
-    y_data = np.array([0.0, 0.5, 1.0])
-
-    # Prepare structure.
-    network = SimpleNetwork()
-    #optimizer = SGDOptimizer(eta=1e-3)
-    #optimizer = MomentumOptimizer(eta=1e-3, alpha=0.5)
-    #optimizer = AdagradOptimizer(eta=1e-2)
-    #optimizer = RMSPropOptimizer(eta=1e-2, rho=0.9)
-    #optimizer = AdadeltaOptimizer(rho=0.9)
-    #optimizer = AdamOptimizer(alpha=1e-3, beta1=0.9, beta2=0.999)
-    optimizer = COCOBOptimizer(alpha=100)
-
-    # Train!
-    for i in range(0, 1024):
-        network.train(x_data, y_data)
-        optimizer.optimize(network.param_dict, network.grad_dict)

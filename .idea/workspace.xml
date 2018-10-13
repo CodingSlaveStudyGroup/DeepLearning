@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="282e0a79-85ef-4052-b3d5-c8f60cec4226" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/example/week_5_optimization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/week_5_optimizer.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,11 +15,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="week_5_optimization.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/week_5_optimization.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3013">
+              <caret line="1" column="31" lean-forward="true" selection-start-line="1" selection-start-column="31" selection-end-line="1" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="week_5_optimizer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/week_5_optimizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-220">
-              <caret line="219" column="34" selection-start-line="219" selection-start-column="34" selection-end-line="219" selection-end-column="34" />
+            <state relative-caret-position="460">
+              <caret line="233" column="21" lean-forward="true" selection-start-line="233" selection-start-column="21" selection-end-line="233" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="week_5_supplementary.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/week_5_supplementary.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="711">
+              <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -43,7 +66,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/example/week_1_learnable_perceptron.py" />
+        <option value="$PROJECT_DIR$/example/optimizer.py" />
         <option value="$PROJECT_DIR$/example/week_5_optimizer.py" />
+        <option value="$PROJECT_DIR$/example/week_5_optimization.py" />
+        <option value="$PROJECT_DIR$/example/week_5_supplementary.py" />
       </list>
     </option>
   </component>
@@ -58,6 +84,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -74,7 +101,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -92,7 +118,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.week_5_optimizer">
+  <component name="RunManager" selected="Python.week_5_supplementary">
     <configuration name="week_1_learnable_perceptron" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DeepLearning" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -123,7 +149,25 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example/week_5_optimizer.py" />
+      <option name="SCRIPT_NAME" value="D:\dev\project\DeepLearning\example\week_5_optimization.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="week_5_supplementary" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="DeepLearning" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/example" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example/week_5_supplementary.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -132,9 +176,11 @@
     <list>
       <item itemvalue="Python.week_1_learnable_perceptron" />
       <item itemvalue="Python.week_5_optimizer" />
+      <item itemvalue="Python.week_5_supplementary" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.week_5_supplementary" />
         <item itemvalue="Python.week_5_optimizer" />
         <item itemvalue="Python.week_1_learnable_perceptron" />
       </list>
@@ -166,7 +212,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39911798" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -180,14 +226,21 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/example/week_5_optimizer.py">
+    <entry file="file://$PROJECT_DIR$/example/week_5_optimization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5037">
+          <caret line="219" column="34" selection-start-line="219" selection-start-column="34" selection-end-line="219" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/week_5_optimization.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5865">
           <caret line="255" column="45" lean-forward="true" selection-start-line="255" selection-start-column="45" selection-end-line="255" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/week_5_optimizer.py">
+    <entry file="file://$PROJECT_DIR$/example/week_5_optimization.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5750">
           <caret line="250" column="57" lean-forward="true" selection-start-line="250" selection-start-column="57" selection-end-line="250" selection-end-column="57" />
@@ -208,10 +261,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/week_5_supplementary.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="711">
+          <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/week_5_optimization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3013">
+          <caret line="1" column="31" lean-forward="true" selection-start-line="1" selection-start-column="31" selection-end-line="1" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/example/week_5_optimizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-220">
-          <caret line="219" column="34" selection-start-line="219" selection-start-column="34" selection-end-line="219" selection-end-column="34" />
+        <state relative-caret-position="460">
+          <caret line="233" column="21" lean-forward="true" selection-start-line="233" selection-start-column="21" selection-end-line="233" selection-end-column="21" />
         </state>
       </provider>
     </entry>
