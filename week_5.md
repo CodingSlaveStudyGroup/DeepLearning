@@ -38,7 +38,7 @@
 
 ##### SGD의 단점
 
-![](.\img\week_5\sgd_explicit.png)
+![](/img/week_5/sgd_explicit.png)
 
 SGD의 첫 번째 단점은 <u>그라디언트가 영벡터가 되는 순간 멈춘다</u>는 점이다. 이론적으로는 볼록한(Convex) 함수에만 써야되지만, 현실은 이상과 다르다. 그라디언트가 영벡터가 될 때는 총 3가지로, 지역최적해(Local Optima)이나 안장점(Saddle Point), 기울기가 0인 변곡점(Inflection Point)에 진입하는 경우다. 그리고 안타깝게도 앞의 두 가지 상황은 딥러닝을 하다보면 자주 마주하게 된다.
 
@@ -54,7 +54,7 @@ SGD의 세 번째 단점은 <u>학습률의 유동성이 없다</u>는 점이다
 
 두 번째는 <u>배치 데이터의 구성이 바뀌기 때문</u>이다. 엄밀히 말해 순간적인 손실함수는 배치 데이터에 따라서 변한다. 3월 모의평가 보고 열나게 공부했는데 6월 모의평가 때 출제 경향이 바뀌면 점수가 순간적으로 떨어진 경험이 있을 것이다. 이전 배치로 최적화한 결과가 다음 배치 때 무조건 좋은 결과를 낸다는 보장은 없다. 배치 크기(Batch Size)가 작으면 작을수록 극심한 변화가 나타날 수 있다.
 
-![](.\img\week_5\bad_learning_rate.png)
+![](/img/week_5/bad_learning_rate.png)
 
 세 번째는 현재 구간의 모양에 비해 <u>학습률이 너무 높은 경우</u>에 나타난다. 학습률이 영 좋지않으면 아주 긴 시간동안 진동하거나 영원히 순환한다. 심한 경우 미친듯이 진동하면서 inf로 발산하다가 NaN 크리를 맞게 된다.
 
@@ -132,15 +132,17 @@ COntinuous COin Betting의 약자로, 한동안 Optimizer의 주류였던 그라
 
 각 알고리즘을 간단한 예제를 통해 시각화해보았다. 적당히 만들어낸 데이터를 주고 y = sigmoid(Wx + b)로 이를 예측하는 로지스틱 회귀(Logistic Regression) 문제를 풀게 해보았다. 등고선 그래프는 이 모델의 MSE Loss를 시각적으로 나타낸 것으로, 가로축은 W 세로축은 b를 의미한다. 색이 어두울수록 낮은 손실함수 값을 갖는다. 등고선 위에 그려진 경로는 각각의 Optimizer가 최적화하는 과정에서 파라미터의 변화를 나타낸다.
 
-![](.\img\week_5\32 data + 0.01 pnorm trajectory (medium noise).png)
+![](/img/week_5/32 data + 0.01 pnorm trajectory (medium noise).png)
 
 학습의 진행 정도에 따른 손실함수 변화추이도 나타낼 수 있다. 이 모델에는 파라미터가 2개밖에 없기 때문에 위 그림처럼 등고선 그래프를 만들어낼 수 있지만, 실전에서는 파라미터가 수 십, 수 백 만 개에 달하기 때문에 저런 식으로 그려낼 수가 없다. 때문에 손실함수 값의 변화를 보고 판단을 해야한다.
 
-![](.\img\week_5\32 data + 0.01 pnorm loss (medium noise).png)
+![]("/img/week_5/32 data + 0.01 pnorm loss (medium noise).png")
 
 위 그래프들은 데이터를 32개만 사용한 것이다. 만약 데이터를 더 많이 사용하면 어떻게 될까? 512개의 데이터로 실험해보았다. 같은 시작지점에 같은 하이퍼파라미터를 사용하였음에도 불구하고, 완전히 다른 결과가 나온다. 이번에는 Momentum이 우수한 성능을 보였다.
 
-![](.\img\week_5\512 data + 0.1 pnorm trajectory.png)![](.\img\week_5\512 data + 0.1 pnorm loss.png)
+![ ](/img/week_5/512 data + 0.1 pnorm trajectory.png)
+
+![ ](/img/week_5/512 data + 0.1 pnorm loss.png)
 
 확실한 건 Adagrad는 거의 모든 경우 가장 효율이 나쁘기 때문에 사용하지 않는 것이 좋다.
 
