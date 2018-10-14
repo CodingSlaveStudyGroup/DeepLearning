@@ -75,12 +75,13 @@ class SimpleNetwork:
 if __name__ == '__main__':
     # Hyperparameter
     pnorm = 0.1
-    N = 32
+    N = 4096
     T = 256
 
     # Prepare data.
     x_data = np.linspace(-2.0, 2.0, N)
-    y_data = sigmoid(2*x_data - 1) + np.random.normal(loc=0.0, scale=5e-2, size=np.size(x_data))
+    #y_data = sigmoid(2*x_data - 1) + np.random.normal(loc=0.0, scale=5e-2, size=np.size(x_data))
+    y_data = np.exp(-np.square(x_data))
 
     # Prepare structure.
     network = SimpleNetwork()

@@ -8,11 +8,11 @@
 
 ## 최적화 기법(Optimization Method)
 
-**최적화 기법(Optimization Method)**이란, 어떤 함수의 극대값(Maxima)과 극소값(Minima)을 찾는 방법을 말한다. 아예 이것만 연구하는 최적화 이론(Optimization Theory)이라는 분야가 있을 정도로 깊고 넓은 분야다.
+**최적화 기법(Optimization Method)** 이란, 어떤 함수의 극대값(Maxima)과 극소값(Minima)을 찾는 방법을 말한다. 아예 이것만 연구하는 최적화 이론(Optimization Theory)이라는 분야가 있을 정도로 깊고 넓은 분야다.
 
 [^]: 알고리즘 경시대회를 준비했던 사람이라면 담금질 기법(Simulated Annealing)이란 단어를 한 번쯤은 들어봤을 것이다. 이 알고리즘은 전산학에서 쓰이는 대표적인 최적화 기법 중 하나다.
 
- 하지만 어떤 함수든 만능으로 빠르게 극값을 찾아주는 마술은 존재하지 않는다. 최적화 기법은 그 접근법에 따라서 엄청나게 다양하다. 그 중 기계학습에서 관심을 갖는 기법으로 **통계학적 방식(Statistical Method. ex: MCMC, EM, Bayesian)**과 **서브그라디언트 방식(Subgradient Method)** 정도가 있다.
+ 하지만 어떤 함수든 만능으로 빠르게 극값을 찾아주는 마술은 존재하지 않는다. 최적화 기법은 그 접근법에 따라서 엄청나게 다양하다. 그 중 기계학습에서 관심을 갖는 기법으로 **통계학적 방식(Statistical Method. ex: MCMC, EM, Bayesian)** 과 **서브그라디언트 방식(Subgradient Method)** 정도가 있다.
 
 [^]: 이외에도 무니무니 교수 덕분에 유명해진 유전 알고리즘(Genetic Algorithm)도 강화학습에서는 단골 주제로 나온다.
 
@@ -22,7 +22,7 @@
 
  방식은 미분을 활용하여 최적화를 한다. BP 특성상 인공신경망에서 활발히 연구하고 사용한다. 서브그라디언트 방식은 크게 **1st-order**와 **2nd-order**이 있으며, 1계도함수를 쓰냐 2계도함수를 쓰냐로 나뉘어진다. 그런데 2nd-order는 계산 시간이 오래걸리고 구현도 난해해서 이론적인 연구만 이루어지고 실전에선 쓰지 않는다. 여기서 소개하는 것은 전부 1st-order 방식에 속한다.
 
-아래의 기법들의 의사코드 및 실제구현은 ./example/week_5_optimization.py에서 확인할 수 있다.
+아래의 기법들의 의사코드 및 실제구현은 [./example/week_5_optimization.py](https://github.com/CodingSlaveStudyGroup/DeepLearning/blob/master/example/week_5_optimization.py)에서 확인할 수 있다.
 
 ### Stochastic Gradient Descent
 

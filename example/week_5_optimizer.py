@@ -220,7 +220,7 @@ class AdamOptimizer:
 #   G  := G + |g|
 #   R  := max(R + (θ - θ0) * g, 0)
 #   S  := S + g
-#   θ := θ + S * (L + R) / (L * max(G + L, α * L))
+#   θ := θ + S * (L + R) / (L * max(G + L, α * L) + ε)
 #
 #   Hyperparameter
 #       α: Safety guard from having too big step size. Typical value is 100
